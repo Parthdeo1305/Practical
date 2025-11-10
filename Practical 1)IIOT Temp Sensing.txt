@@ -1,0 +1,83 @@
+IIOT 1
+
+
+Arduino 1
+#include <SoftwareSerial.h>
+const int tempPin = A0;
+SoftwareSerial Link(2, 3);
+
+void setup() {
+  Serial.begin(9600);
+  Link.begin(4800);
+  Serial.println("Node-A Ready (Publisher)...");
+}
+
+void loop() {
+  int raw = analogRead(tempPin);
+  float volts = raw * (5.0 / 1023.0);
+  float temp = (volts - 0.5) * 100.0;
+  
+  Serial.print("Sent Temperature: ");
+  Serial.print(temp, 1);
+  Serial.println(" C");
+  
+  
+  
+  Link.print("{\"temp\":");
+  Link.print(temp, 1);
+  Link.print("}\n");
+  
+  delay(1000);
+}
+
+
+
+Arduino 2
+#include <SoftwareSerial.h>
+SoftwareSerial Link(2, 3);   // RX=2 (from A1 TX D3), TX=3 (unused)
+
+const int LED_PIN = 13;
+float THRESHOLD_C = 24.0;   // Temperature threshold (°C)
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+  digitalWrite(LED_PIN, LOW);
+  Serial.begin(9600);
+  Link.begin(4800);
+  Serial.println("Subscriber Ready - Monitoring Temperature...");
+}
+
+void loop() {
+  // Wait until full JSON message is received (ends with '}')
+  if (Link.available()) {
+    String data = Link.readStringUntil('}');
+    data += "}"; // Add closing brace back
+
+    // Extract temperature from message {"temp":25.3}
+    if (data.indexOf("temp") > 0) {
+      int startPos = data.indexOf(":") + 1;
+      int endPos = data.indexOf("}");
+      float temp = data.substring(startPos, endPos).toFloat();
+
+      // Control LED based on temperature threshold
+      if (temp >= THRESHOLD_C) {
+        digitalWrite(LED_PIN, HIGH);
+        Serial.print("Temperature: ");
+        Serial.print(temp, 1);
+        Serial.println(" °C | LED ON (High Temperature)");
+      } 
+      else {
+        digitalWrite(LED_PIN, LOW);
+        Serial.print("Temperature: ");
+        Serial.print(temp, 1);
+        Serial.println(" °C | LED OFF (Normal)");
+      }
+
+      Serial.println("----------------------------------");
+    }
+  }
+}
+
+
+
+

@@ -1,0 +1,61 @@
+// CPS System using TMP36 Temperature Sensor
+// Commands in Serial Monitor: 1 = Read Temperature | 2 = LED ON | 3 = LED OFF
+
+const int tempPin = A0;  // TMP36 output pin
+const int ledPin = 12;    // LED actuator
+float temperature = 0.0;
+int userCommand = 0;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, LOW);
+
+  Serial.println("=== CPS Temperature Monitoring & Control Interface ===");
+  Serial.println("1. Read Temperature");
+  Serial.println("2. Turn LED ON (Manual)");
+  Serial.println("3. Turn LED OFF (Manual)");
+  Serial.println("-----------------------------------------------");
+}
+
+void loop() {
+  if (Serial.available()) {
+    userCommand = Serial.parseInt();   // Read numeric command from Serial Monitor
+
+    switch (userCommand) {
+      case 1: {  // Read temperature
+        int sensorValue = analogRead(tempPin);         // Read sensor data
+        float voltage = sensorValue * (5.0 / 1024.0);  // Convert to voltage
+        temperature = (voltage - 0.5) * 100.0;         // TMP36 conversion
+
+        Serial.print("Current Temperature: ");
+        Serial.print(temperature);
+        Serial.println(" C");
+
+        if (temperature > 30.0) {
+          digitalWrite(ledPin, HIGH);
+          Serial.println("High Temperature! LED turned ON automatically.");
+        } else {
+          digitalWrite(ledPin, LOW);
+          Serial.println("Temperature Normal. LED OFF.");
+        }
+        break;
+      }
+
+      case 2:
+        digitalWrite(ledPin, HIGH);
+        Serial.println("LED turned ON manually by user.");
+        break;
+
+      case 3:
+        digitalWrite(ledPin, LOW);
+        Serial.println("LED turned OFF manually by user.");
+        break;
+
+      default:
+        Serial.println("Invalid Command! Enter 1, 2, or 3.");
+    }
+  }
+
+  delay(1000);  // Wait before next input
+}

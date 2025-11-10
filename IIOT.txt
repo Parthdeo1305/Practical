@@ -1,0 +1,28 @@
+
+Practical 1:small-scale IIoT network using wireless communication protocols
+https://www.tinkercad.com/things/2w4sna7A3g3-practical-1?sharecode=f1zaeffuc0cLlcN7f9m3W7cZB-rekrfeNC4ixj0fLUQ
+
+
+Practical 2: sending alert messages to the user for controlling and interacting with your
+environment.
+https://www.tinkercad.com/things/0Bw2C90fEcU-prac-2?sharecode=sZG9YBCOTL9UHBPZo-G70y5wuWSlvLfWcUpBCRW5rIE
+
+
+Practical 3:program for interfacing with PIR sensor Experiment
+https://www.tinkercad.com/things/gTd07323NQA-prac3?sharecode=82PxGaVPjCX03wsPiSJ39rm83CzcZUQ_pjw8zEwfm2I
+
+
+Practical 4:evelop a user interface for monitoring and controlling CPS system
+https://www.tinkercad.com/things/4ELd89yFNtt-practical-4?sharecode=Lg-I7hDUXpOHOxuAiZGoJvhYbdGosyW6m1Y8BMVnqkU
+
+
+
+Practical 5:sensor data to the cloud and storing it in a databas
+https://www.tinkercad.com/things/cx2q2EZ7HQ0-pratical-5?sharecode=Q6S77D3YWjY-zLZY_z1S3uSta3U0_v4fZU8OUQfY7_c
+
+
+
+
+
+
+

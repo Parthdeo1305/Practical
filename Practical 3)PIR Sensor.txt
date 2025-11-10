@@ -1,0 +1,26 @@
+int pirpin=2;
+int ledpin=12;
+  
+void setup(){
+  pinMode(pirpin,INPUT);
+  pinMode(ledpin,OUTPUT);
+  Serial.begin(9600);
+  Serial.println("PIR simulation starting.....");
+      
+}
+
+void loop(){
+  int sensorvalue= digitalRead(pirpin);
+  
+  if (sensorvalue ==HIGH){
+    digitalWrite(ledpin,HIGH);
+    Serial.println("motion detected!");
+  }
+  else{
+    digitalWrite(ledpin,LOW);
+    Serial.println("no motion");
+  }
+  delay(500);
+  
+}
+                 
